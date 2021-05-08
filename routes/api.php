@@ -19,4 +19,6 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::apiResource('vaccines', VaccineController::class);
+Route::apiResource('vaccines', VaccineController::class)->missing(function () {
+    return response()->json(['Vaccine Not Found'], 404);
+});
