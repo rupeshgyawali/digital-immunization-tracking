@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vaccine;
+use Error;
 use Illuminate\Http\Request;
 
 class VaccineController extends Controller
@@ -14,7 +15,7 @@ class VaccineController extends Controller
      */
     public function index()
     {
-        //
+        return Vaccine::all();
     }
 
     /**
@@ -25,7 +26,10 @@ class VaccineController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Vaccine::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ]);
     }
 
     /**
@@ -36,7 +40,7 @@ class VaccineController extends Controller
      */
     public function show(Vaccine $vaccine)
     {
-        //
+        return $vaccine;
     }
 
     /**
@@ -48,7 +52,17 @@ class VaccineController extends Controller
      */
     public function update(Request $request, Vaccine $vaccine)
     {
-        //
+        if ($request->has('name')) {
+            $vaccine->name = $request->input('name');
+        }
+        if ($request->has('description')) {
+            $vaccine->description = $request->input('description');
+        }
+        if ($vaccine->isDirty()) {
+            $vaccine->save();
+        }
+
+        return $vaccine;
     }
 
     /**
@@ -59,6 +73,8 @@ class VaccineController extends Controller
      */
     public function destroy(Vaccine $vaccine)
     {
-        //
+        $vaccine->delete();
+
+        return response()->json(['Delete Successfull'], 200);
     }
 }
