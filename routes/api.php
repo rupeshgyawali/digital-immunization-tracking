@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChildController;
 use App\Http\Controllers\VaccineController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResource('vaccines', VaccineController::class)->missing(function () {
     return response()->json(['Vaccine Not Found'], 404);
+});
+Route::apiResource('children', ChildController::class)->missing(function () {
+    return response()->json(['Child Not Found'], 404);
 });
