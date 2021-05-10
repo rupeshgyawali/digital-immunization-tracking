@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChildController;
+use App\Http\Controllers\ChildVaccineController;
 use App\Http\Controllers\VaccineController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,17 @@ Route::apiResource('vaccines', VaccineController::class)->missing(function () {
 });
 Route::apiResource('children', ChildController::class)->missing(function () {
     return response()->json(['Child Not Found'], 404);
+});
+//For child vaccination records
+Route::prefix('children/{child}')->name('children.vaccines.')->group(function () {
+    //View all vaccines that the child is vaccinated with
+    Route::get('/vaccines', [ChildVaccineController::class, 'index'])->name('index');
+    //Add the vaccine to the vaccination record for the child
+    Route::post('/vaccines/{vaccine}', [ChildVaccineController::class, 'store'])->name('store')->missing(function () {
+        return response()->json(['Resource Not Found'], 404);
+    });
+    //Delecte the vaccine from the vaccination record for the child
+    Route::delete('/vaccines/{vaccine}', [ChildVaccineController::class, 'destroy'])->name('destroy')->missing(function () {
+        return response()->json(['Resource Not Found'], 404);
+    });
 });
