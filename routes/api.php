@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChildController;
 use App\Http\Controllers\ChildVaccineController;
 use App\Http\Controllers\HealthPersonnelController;
@@ -47,3 +48,5 @@ Route::apiResource('health-personnels', HealthPersonnelController::class)->param
 ])->missing(function () {
     return response()->json(['Health Personnel Not Found'], 404);
 });
+//Authentication Routes
+Route::post('authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
