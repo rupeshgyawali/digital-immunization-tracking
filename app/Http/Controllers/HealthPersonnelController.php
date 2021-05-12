@@ -11,6 +11,7 @@ class HealthPersonnelController extends Controller
     public function __construct()
     {
         $this->middleware('auth:sanctum');
+        $this->middleware('admin')->only(['index', 'store', 'destroy']);
     }
     /**
      * Display a listing of the resource.
@@ -48,6 +49,9 @@ class HealthPersonnelController extends Controller
      */
     public function show(User $user)
     {
+        if (!auth()->user()->is_admin && auth()->user()->id != $user->id) {
+            return response()->json([], 401);
+        }
         return $user;
     }
 
