@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ChildVaccineController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index');
+    }
     /**
      * Display a listing of the resource.
      *

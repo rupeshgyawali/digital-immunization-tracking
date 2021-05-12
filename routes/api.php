@@ -50,3 +50,4 @@ Route::apiResource('health-personnels', HealthPersonnelController::class)->param
 });
 //Authentication Routes
 Route::post('authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');
