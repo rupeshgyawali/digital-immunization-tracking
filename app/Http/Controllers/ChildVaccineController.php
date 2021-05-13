@@ -36,7 +36,9 @@ class ChildVaccineController extends Controller
         if (!$child->vaccines()->where('vaccines.id', $vaccine->id)->exists()) {
             $child->vaccines()->attach($vaccine->id);
         }
-        return response()->json(['Vaccination Recorded: ' . $vaccine->name], 201);
+        return response()->json([
+            'message' => 'Vaccination Record added successfully' . $vaccine->name
+        ], 201);
     }
 
     /**
@@ -74,6 +76,8 @@ class ChildVaccineController extends Controller
     public function destroy(Child $child, Vaccine $vaccine)
     {
         $child->vaccines()->detach($vaccine->id);
-        return response()->json(['Vaccination Recorded Delected Succesfully: ' . $vaccine->name], 200);
+        return response()->json([
+            'message' => 'Vaccination Record Removed Succesfully'
+        ], 200);
     }
 }

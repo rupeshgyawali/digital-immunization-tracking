@@ -98,6 +98,8 @@ class ChildController extends Controller
     {
         $child->delete();
 
-        return response()->json(['Delete Successfull'], 200);
+        return response()->json([
+            "message" => "Delete Successfull"
+        ], 200);
     }
 }

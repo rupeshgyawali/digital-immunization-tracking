@@ -86,6 +86,8 @@ class VaccineController extends Controller
     {
         $vaccine->delete();
 
-        return response()->json(['Delete Successfull'], 200);
+        return response()->json([
+            "message" => "Delete Successfull"
+        ], 200);
     }
 }
