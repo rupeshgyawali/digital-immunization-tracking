@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vaccine;
 use Error;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class VaccineController extends Controller
 {
@@ -31,10 +32,13 @@ class VaccineController extends Controller
      */
     public function store(Request $request)
     {
-        return Vaccine::create([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-        ]);
+        //Validating and filtering fillable fields.
+        $vaccineData = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string'
+        ])->validate();
+
+        return Vaccine::create($vaccineData);
     }
 
     /**
@@ -57,12 +61,14 @@ class VaccineController extends Controller
      */
     public function update(Request $request, Vaccine $vaccine)
     {
-        if ($request->has('name')) {
-            $vaccine->name = $request->input('name');
-        }
-        if ($request->has('description')) {
-            $vaccine->description = $request->input('description');
-        }
+        //Validating and filtering fillable fields.
+        $vaccineData = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'description' => 'nullable|string'
+        ])->validate();
+
+        $vaccine->fill($vaccineData);
+
         if ($vaccine->isDirty()) {
             $vaccine->save();
         }

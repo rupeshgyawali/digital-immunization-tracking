@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -14,8 +15,14 @@ class AuthController extends Controller
     }
     public function authenticate(Request $request)
     {
+        //Validating and filtering email and password.
+        $credentials = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ])->validate();
+
         //Check Credentials
-        if (!Auth::attempt($request->only(['email', 'password']))) {
+        if (!Auth::attempt($credentials)) {
             return response()->json(["Invalid Credentials"], 401);
         }
         //After credential check passed, get the user with the email

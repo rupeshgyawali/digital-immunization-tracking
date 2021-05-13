@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class HealthPersonnelController extends Controller
 {
@@ -31,12 +32,14 @@ class HealthPersonnelController extends Controller
      */
     public function store(Request $request)
     {
-        $health_personal = $request->only([
-            'name',
-            'email',
-            'phone_no',
-            'password'
-        ]);
+        //Validating and filtering fields.
+        $health_personal = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed',
+            'phone_no' => 'required'
+        ])->validate();
+
         $health_personal['password'] = Hash::make($health_personal['password']);
         return User::create($health_personal);
     }
@@ -64,13 +67,14 @@ class HealthPersonnelController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $user->fill(
-            $request->only([
-                'name',
-                'email',
-                'phone_no'
-            ])
-        );
+        //Validating and filtering fields.
+        $health_personal = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:users',
+            'phone_no' => 'nullable'
+        ])->validate();
+
+        $user->fill($health_personal);
 
         if ($user->isDirty()) {
             $user->save();

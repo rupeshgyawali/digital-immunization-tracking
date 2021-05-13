@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Child;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ChildController extends Controller
 {
@@ -29,19 +30,20 @@ class ChildController extends Controller
      */
     public function store(Request $request)
     {
-        return Child::create(
-            $request->only([
-                'name',
-                'dob',
-                'birth_place',
-                'father_name',
-                'mother_name',
-                'father_phn',
-                'mother_phn',
-                'temporary_addr',
-                'permanent_addr',
-            ])
-        );
+        //Validating and filtering fillable fields.
+        $childData = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'dob' => 'required|date_format:Y/m/d|before:today',
+            'birth_place' => 'required',
+            'father_name' => 'required|string|max:255',
+            'mother_name' => 'required|string|max:255',
+            'father_phn' => 'required',
+            'mother_phn' => 'required',
+            'temporary_addr' => 'required',
+            'permanent_addr' => 'required',
+        ])->validate();
+
+        return Child::create($childData);
     }
 
     /**
@@ -64,20 +66,24 @@ class ChildController extends Controller
      */
     public function update(Request $request, Child $child)
     {
-        $child->fill(
-            $request->only([
-                'name',
-                'dob',
-                'birth_place',
-                'father_name',
-                'mother_name',
-                'father_phn',
-                'mother_phn',
-                'temporary_addr',
-                'permanent_addr',
-            ])
-        );
-        $child->save();
+        //Validating and filtering fillable fields.
+        $childData = Validator::make($request->all(), [
+            'name' => 'nullable|string|max:255',
+            'dob' => 'nullable|date_format:Y/m/d|before:today',
+            'birth_place' => 'nullable',
+            'father_name' => 'nullable|string|max:255',
+            'mother_name' => 'nullable|string|max:255',
+            'father_phn' => 'nullable',
+            'mother_phn' => 'nullable',
+            'temporary_addr' => 'nullable',
+            'permanent_addr' => 'nullable',
+        ])->validate();
+
+        $child->fill($childData);
+
+        if ($child->isDirty()) {
+            $child->save();
+        }
 
         return $child;
     }
