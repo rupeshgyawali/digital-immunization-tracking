@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ChildController;
-use App\Http\Controllers\ChildVaccineController;
-use App\Http\Controllers\HealthPersonnelController;
-use App\Http\Controllers\VaccineController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ChildController;
+use App\Http\Controllers\Api\ChildVaccineController;
+use App\Http\Controllers\Api\HealthPersonnelController;
+use App\Http\Controllers\Api\VaccineController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
