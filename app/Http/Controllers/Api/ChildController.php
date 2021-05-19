@@ -53,9 +53,10 @@ class ChildController extends Controller
      * @param  \App\Models\Child  $child
      * @return \Illuminate\Http\Response
      */
-    public function show(Child $child)
+    public function show()
     {
-        return $child;
+        $childs=Child::all();
+        return view('admin.child')->with('childs',$childs);
     }
 
     /**

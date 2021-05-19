@@ -47,9 +47,10 @@ class VaccineController extends Controller
      * @param  \App\Models\Vaccine  $vaccine
      * @return \Illuminate\Http\Response
      */
-    public function show(Vaccine $vaccine)
+    public function show()
     {
-        return $vaccine;
+        $vaccines=Vaccine::all();
+        return view('/admin.vaccine')->with('vaccines',$vaccines);
     }
 
     /**

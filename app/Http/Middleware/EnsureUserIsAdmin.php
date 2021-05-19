@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Support\Facades\Auth;
 
 class EnsureUserIsAdmin
 {
@@ -17,14 +18,22 @@ class EnsureUserIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->user()->is_admin) {
-            throw new AuthenticationException(
-                'Unauthorised.',
-                [],
-                $this->redirectTo($request)
-            );
-        }
+        // if (!$request->user()->is_admin) {
+        //     throw new AuthenticationException(
+        //         'Unauthorised.',
+        //         [],
+        //         $this->redirectTo($request)
+        //     );
+        // }
+        // return $next($request);
+        if(Auth::user()->usertype == 'admin')
+       {
         return $next($request);
+       }
+       else
+       {
+        return redirect ('/home')->with('status','You are not allowed to Admin Dashboard');
+       }
     }
 
     /**
@@ -36,7 +45,7 @@ class EnsureUserIsAdmin
     protected function redirectTo($request)
     {
         if (!$request->expectsJson()) {
-            return route('login');
+            return route('/home');
         }
     }
 }
