@@ -16,6 +16,9 @@
           <div class="table-responsive">
             <table class="table">
               <thead class=" text-primary">
+                 <th>
+                     ID
+                  </th>
                 <th>
                   Name
                 </th>
@@ -47,6 +50,7 @@
               <tbody>
                 @foreach ($childs as $child)
                 <tr>
+                  <td>{{$child->id}}</td>
                   <td>{{$child->name}}</td>
                   <td>{{$child->dob}}</td>
                   <td>{{$child->birth_place}}</td>

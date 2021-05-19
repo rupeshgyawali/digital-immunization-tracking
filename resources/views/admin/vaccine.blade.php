@@ -17,6 +17,9 @@
             <table class="table">
               <thead class=" text-primary">
                 <th>
+                  ID
+                </th>
+                <th>
                   Name
                 </th>
                 <th>
@@ -26,6 +29,9 @@
               <tbody>
                 @foreach ($vaccines as $vaccine)
                 <tr>
+                  <td>
+                    {{$vaccine->id}}
+                   </td>
                   <td>
                    {{$vaccine->name}}
                   </td>
