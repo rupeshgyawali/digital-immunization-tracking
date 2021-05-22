@@ -20,6 +20,18 @@ class ChildController extends Controller
      */
     public function index()
     {
+        if (request()->has('phone_no') && request()->has('dob')) {
+            $phone_no = request()->query('phone_no');
+            $dob = request()->query('dob');
+            $child =  Child::where('father_phn', $phone_no)
+                ->orWhere('mother_phn', $phone_no)
+                ->where('dob', $dob)
+                ->first();
+            if ($child === null) {
+                return response()->json(['Child Not Found'], 404);
+            }
+            return $child;
+        }
         return Child::all();
     }
 
