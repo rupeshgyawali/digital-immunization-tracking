@@ -24,7 +24,7 @@ class AuthController extends Controller
 
         //Check Credentials
         if (!Auth::attempt($credentials)) {
-            return response()->json(["Invalid Credentials"], 401);
+            return response()->json(["message" => "Invalid Credentials"], 401);
         }
         //After credential check passed, get the user with the email
         $user = User::where('email', $request['email'])->firstOrFail();

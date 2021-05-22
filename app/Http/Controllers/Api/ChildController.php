@@ -28,7 +28,7 @@ class ChildController extends Controller
                 ->where('dob', $dob)
                 ->first();
             if ($child === null) {
-                return response()->json(['Child Not Found'], 404);
+                return response()->json(["message" => "Child Not Found"], 404);
             }
             return $child;
         }
