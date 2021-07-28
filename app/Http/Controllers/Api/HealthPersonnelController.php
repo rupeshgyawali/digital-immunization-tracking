@@ -99,29 +99,5 @@ class HealthPersonnelController extends Controller
             "message" => "Delete Successfull"
         ], 200);
     }
-    public function registered()
-    {
-        $users=User::all();
-        return view('admin.registerHP')->with('users',$users);
-    }
-
-    public function registeredit(Request $request,$id)
-    {
-        $users =User::findOrFail($id);
-        return view('admin.edit-role')->with('users',$users);
-    }
-    public function registerupdate(Request $request,$id)
-    {
-        $users=User::find($id);
-        $users->name=$request->input('username');
-        $users->usertype=$request->input('usertype');
-        $users->update();
-        return redirect('registerHP')->with('status','Data Updated Successfully');
-    }
-    public function registeredelete($id)
-    {
-        $users=User::findOrFail($id);
-        $users->delete();
-        return redirect('registerHP')->with('status','Data Deleted Successfully');
-    }
+    
 }

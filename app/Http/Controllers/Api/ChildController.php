@@ -55,8 +55,7 @@ class ChildController extends Controller
      */
     public function show()
     {
-        $childs=Child::all();
-        return view('admin.child')->with('childs',$childs);
+       
     }
 
     /**

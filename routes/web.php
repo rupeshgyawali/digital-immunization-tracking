@@ -32,13 +32,18 @@ Route::group(['middleware'=>['auth','admin']],function()
     Route::get('/vaccine', function () {
         return view('admin.vaccine');
     });
-    Route::get('/registerHP','App\Http\Controllers\Api\HealthPersonnelController@registered');
-    Route::get('/edit-role/{id}','App\Http\Controllers\Api\HealthPersonnelController@registeredit');
-    Route::put('/update-role/{id}','App\Http\Controllers\Api\HealthPersonnelController@registerupdate');
-    Route::delete('/delete-role/{id}','App\Http\Controllers\Api\HealthPersonnelController@registeredelete');
+    // Route::get('/user', function () {
+    //     return view('admin.user');
+    // });
+    Route::get('/registerHP','App\Http\Controllers\Dashboard\HealthPersonnelController@registered');
+    Route::get('/user','App\Http\Controllers\Dashboard\UserController@registered');
+    Route::get('/edit-role/{id}','App\Http\Controllers\Dashboard\HealthPersonnelController@registeredit');
+    Route::put('/update-role/{id}','App\Http\Controllers\Dashboard\HealthPersonnelController@registerupdate');
+    Route::delete('/delete-role/{id}','App\Http\Controllers\Dashboard\HealthPersonnelController@registeredelete');
 
-    Route::get('/child','App\Http\Controllers\Api\ChildController@show');
-    Route::get('/vaccine','App\Http\Controllers\Api\VaccineController@show');
+    Route::get('/child','App\Http\Controllers\Dashboard\ChildController@show');
+    Route::get('/vaccine','App\Http\Controllers\Dashboard\VaccineController@show');
+    Route::post('/addHP','App\Http\Controllers\Dashboard\HealthPersonnelController@store');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

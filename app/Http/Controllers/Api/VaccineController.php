@@ -49,8 +49,7 @@ class VaccineController extends Controller
      */
     public function show()
     {
-        $vaccines=Vaccine::all();
-        return view('/admin.vaccine')->with('vaccines',$vaccines);
+       
     }
 
     /**

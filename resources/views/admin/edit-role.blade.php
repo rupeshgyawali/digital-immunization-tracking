@@ -27,14 +27,14 @@
                                     <label>Roles</label>
                                     <select name="usertype" class="form-control">
                                         <option value="admin">Admin</option>
-                                        <option value="member">Member</option>
+                                        <option value="">Member</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-success">Update</button>
                                 <a href="/registerHP" class="btn btn-danger">Cancel</a>
                             </form>
                          </div>
-                     </div>
+                     </div> 
                  </div>
              </div>
          </div>
