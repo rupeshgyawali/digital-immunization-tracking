@@ -7,11 +7,13 @@ use App\Models\Child;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+use function PHPUnit\Framework\isEmpty;
+
 class ChildController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('show');
+        $this->middleware('auth:sanctum')->except('index', 'show');
     }
     /**
      * Display a listing of the resource.
@@ -23,19 +25,21 @@ class ChildController extends Controller
         if (request()->has('phone_no') && request()->has('dob')) {
             $phone_no = request()->query('phone_no');
             $dob = request()->query('dob');
-            $child =  Child::where('father_phn', $phone_no)
-                ->orWhere('mother_phn', $phone_no)
-                ->where('dob', $dob)
-                ->first();
-            if ($child === null) {
-                return response()->json(["message" => "Child Not Found"], 404);
+            $children =  Child::where('dob', $dob)
+                ->where(function ($query) use ($phone_no) {
+                    $query->where('father_phn', $phone_no)
+                        ->orWhere('mother_phn', $phone_no);
+                })
+                ->get();
+            if ($children->isEmpty()) {
+                return response()->json(["message" => "Children Not Found"], 404);
             }
-            return $child;
+            return $children;
         }
         return Child::all();
     }
 
-    /**
+    /*
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
