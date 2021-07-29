@@ -77,8 +77,7 @@
                 <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Roles') }}</label>
                 <div class="col-md-6">
                   <select name="usertype" class="form-control">
-                    <option value="admin">Admin</option>
-                    <option value="">Member</option>
+                    <option value= "">Member</option>
                 </select>
                 </div>
             </div>
@@ -132,7 +131,7 @@
               </thead>
               <tbody style="text-align: center">
                 @foreach ($users as $user)
-                @if ($user->usertype=='admin')
+                @if ($user->usertype == "")
                 <tr>
                   <td>
                    {{$user->name}}
@@ -144,7 +143,7 @@
                     {{$user->email}}
                   </td>
                   <td>
-                    {{$user->usertype}}
+                    member
                   </td>
                     <td>
                     <a href="/edit-role/{{$user->id}}" class="btn btn-success">EDIT</a>

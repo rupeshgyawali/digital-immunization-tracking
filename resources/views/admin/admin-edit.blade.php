@@ -26,7 +26,7 @@
                                 <div class="mb-3">
                                     <label>Roles</label>
                                     <select name="usertype" class="form-control">
-                                        <option value="">Member</option>
+                                        <option value="admin">Admin</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-success">Update</button>

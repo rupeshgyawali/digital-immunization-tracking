@@ -54,8 +54,10 @@ class HealthPersonnelController extends Controller
                 'name'=>$request->name,
                 'email'=>$request->email,
                 'phone'=>$request->phone,
-                'password'=>Hash::make($request->password)
+                'password'=>Hash::make($request->password),
             ]);
+            $users->usertype="";
+            $users->save();
             return redirect('registerHP')->with('status','Data Added Successfully');
 
     }

@@ -32,6 +32,9 @@
                   Father Phone
                 </th>
                 <th>
+                  Mother Phone
+                </th>
+                <th>
                   Father Name
                 </th>
                 <th>
@@ -55,6 +58,7 @@
                   <td>{{$child->dob}}</td>
                   <td>{{$child->birth_place}}</td>
                   <td>{{$child->father_phn}}</td>
+                  <td>{{$child->mother_phn}}</td>
                   <td>{{$child->father_name}}</td>
                   <td>{{$child->mother_name}}</td>
                   <td>{{$child->temporary_addr}}</td>
