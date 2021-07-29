@@ -49,5 +49,5 @@ Route::apiResource('health-personnels', HealthPersonnelController::class)->param
     return response()->json(["message" => "Health Personnel Not Found"], 404);
 });
 //Authentication Routes
-Route::post('authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
-Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('authenticate', [AuthController::class, 'authenticate'])->name('api.authenticate');
+Route::post('logout', [AuthController::class, 'logout'])->name('api.logout');

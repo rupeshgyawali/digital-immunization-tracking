@@ -19,9 +19,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'phone',
         'email',
         'password',
-        'phone_no',
     ];
 
     /**
@@ -42,4 +42,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getUsertypeAttribute()
+    {
+        if ($this->is_admin) {
+            return "admin";
+        }
+        return "";
+    }
+
+    public function setUsertypeAttribute($value)
+    {
+        $this->attributes['is_admin'] = strtolower($value) === "admin";
+    }
 }

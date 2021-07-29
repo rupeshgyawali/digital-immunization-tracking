@@ -38,7 +38,7 @@ class HealthPersonnelController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
-            'phone_no' => 'required'
+            'phone' => 'required'
         ])->validate();
 
         $health_personal['password'] = Hash::make($health_personal['password']);
@@ -72,7 +72,7 @@ class HealthPersonnelController extends Controller
         $health_personal = Validator::make($request->all(), [
             'name' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:users',
-            'phone_no' => 'nullable'
+            'phone' => 'nullable'
         ])->validate();
 
         $user->fill($health_personal);
