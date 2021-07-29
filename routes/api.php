@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\ChildController;
 use App\Http\Controllers\Api\ChildVaccineController;
 use App\Http\Controllers\Api\HealthPersonnelController;
 use App\Http\Controllers\Api\VaccineController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,3 +50,6 @@ Route::apiResource('health-personnels', HealthPersonnelController::class)->param
 //Authentication Routes
 Route::post('authenticate', [AuthController::class, 'authenticate'])->name('api.authenticate');
 Route::post('logout', [AuthController::class, 'logout'])->name('api.logout');
+
+Route::post('otp/generate', [AuthController::class, 'generateOtp'])->name('api.otp.generate');
+Route::post('children/login', [AuthController::class, 'loginChild'])->name('children.login');

@@ -7,7 +7,6 @@ use App\Models\Child;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-use function PHPUnit\Framework\isEmpty;
 
 class ChildController extends Controller
 {
@@ -50,7 +49,7 @@ class ChildController extends Controller
         //Validating and filtering fillable fields.
         $childData = Validator::make($request->all(), [
             'name' => 'nullable|string|max:255',
-            'dob' => 'required|date_format:Y/m/d|before:today',
+            'dob' => 'required|date_format:Y/m/d|before:tomorrow',
             'birth_place' => 'required',
             'father_name' => 'required|string|max:255',
             'mother_name' => 'required|string|max:255',
@@ -86,7 +85,7 @@ class ChildController extends Controller
         //Validating and filtering fillable fields.
         $childData = Validator::make($request->all(), [
             'name' => 'nullable|string|max:255',
-            'dob' => 'nullable|date_format:Y/m/d|before:today',
+            'dob' => 'nullable|date_format:Y/m/d|before:tomorrow',
             'birth_place' => 'nullable',
             'father_name' => 'nullable|string|max:255',
             'mother_name' => 'nullable|string|max:255',
