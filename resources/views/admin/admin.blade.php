@@ -1,25 +1,24 @@
 @extends('layouts.master')
 @section('title')
-    Vaccine Details
+    Admin
 @endsection
 
 @section('content')
 
-
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add New Vaccine</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add New Admin</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
 
       <div class="card-body">
-        <form method="POST" action="/addVaccine">
+        <form method="POST" action="/addAd">
             @csrf
 
             <div class="form-group row">
-                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Vaccine Name') }}</label>
+                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
                 <div class="col-md-6">
                     <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -33,12 +32,12 @@
             </div>
 
             <div class="form-group row">
-                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
+                <label for="phone" class="col-md-4 col-form-label text-md-right">{{ __('Phone') }}</label>
 
                 <div class="col-md-6">
-                    <input id="description" type="text" class="form-control @error('description') is-invalid @enderror" name="description" value="{{ old('description') }}" required autocomplete="description" autofocus>
+                    <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
 
-                    @error('description')
+                    @error('phone')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -46,7 +45,43 @@
                 </div>
             </div>
 
-            
+            <div class="form-group row">
+                <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                <div class="col-md-6">
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                    @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                <div class="col-md-6">
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Roles') }}</label>
+                <div class="col-md-6">
+                  <select name="usertype" class="form-control">
+                    <option value="admin">Admin</option>
+                </select>
+                </div>
+            </div>
+
             <div class="form-group row mb-0">
                 <div class="col-md-6 offset-md-4">
                     <button type="submit" class="btn btn-primary">
@@ -59,62 +94,70 @@
     </div>
   </div>
 </div>
-
     
-<div class="row">
+<div class="row"> 
 
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title"> Vaccine Details 
+          <h4 class="card-title">Admins
           <button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add</button>
           </h4>
-          @if (session('status'))
+          
+        @if (session('status'))
           <div class="alert alert-success" role="alert">
               {{ session('status') }}
           </div>
            @endif
-        </div>
+        </div>  
         <div class="card-body">
           <div class="table-responsive">
             <table class="table">
               <thead class=" text-primary">
                 <th>
-                 - 
-                </th>
-                <th>
                   Name
                 </th>
                 <th>
-                  Description
+                  Phone
                 </th>
-                <th style="padding-left:90px" colspan="2">
+                <th>
+                  Email
+                </th>
+                <th>
+                  Role
+                </th>
+                <th style="padding-left:75px" colspan="2">
                   Actions
                 </th>
               </thead>
               <tbody>
-                @foreach ($vaccines as $vaccine)
+                @foreach ($users as $user)
+                @if ($user->usertype == "admin")
                 <tr>
                   <td>
-                    *
-                   </td>
-                  <td>
-                   {{$vaccine->name}}
+                   {{$user->name}}
                   </td>
                   <td>
-                    {{$vaccine->description}}
+                    {{$user->phone}}
                   </td>
                   <td>
-                    <a href="/vaccine-edit/{{$vaccine->id}}" class="btn btn-success">EDIT</a>
+                    {{$user->email}}
+                  </td>
+                  <td>
+                    {{$user->usertype}}
+                  </td>
+                    <td>
+                    <a href="/admin-edit/{{$user->id}}" class="btn btn-success">EDIT</a>
                     </td>  
                     <td >
-                      <form action="/delete-vaccine/{{$vaccine->id}}" method="POST">
+                      <form action="/delete-role/{{$user->id}}" method="POST">
                         @csrf
                         @method('DELETE')
                     <button type="submit" class="btn btn-danger">DELETE</button>
                        </form> 
                     </td>
                 </tr>
+                @endif
                 @endforeach
               </tbody>
             </table>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/immune.png">
+  <link rel="icon" type="image/png" href="../assets/img/logo-01.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title> @yield('title') </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
@@ -15,16 +15,16 @@
   <link href="{{asset('assets/css/now-ui-dashboard.css?v=1.5.0')}}" rel="stylesheet" />
   <link href="{{asset('assets/demo.css')}}" rel="stylesheet" />
   <link rel="stylesheet" href="{{asset('assets/css/dataTables.min.css')}}">
-    <style>
+    {{-- <style>
     .img-responsive {
                         height: auto;
                         width: auto;
-                        max-height: 72px;
+                        max-height: 150px;
                         max-width: 100px;
-                        margin-inline-start: 80px;
+                        margin-inline-start: 60px;
                         
                     }
-    </style>
+    </style> --}}
 </head>
 
 <body class="">
@@ -33,7 +33,7 @@
     <div class="sidebar" data-color="yrp"> <!-- Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"  -->
       <div class="logo">
         <a href="./dashboard">
-        <img src="assets/img/immune.png" class="img-responsive">
+        <img src="assets/img/immune.png" >
         </a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
@@ -62,10 +62,10 @@
               <p><b>Vaccine Details</b></p>
             </a>
           </li>
-          <li class="{{'user'== request()->path() ? 'active' : ''}}">
-            <a href="/user">
+          <li class="{{'admin'== request()->path() ? 'active' : ''}}">
+            <a href="/admin">
               <i class="now-ui-icons tech_mobile"></i>
-              <p><b>USERS</b></p>
+              <p><b>ADMIN</b></p>
             </a>
           </li>
         </ul>
