@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Child;
 use App\Models\Vaccine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+use function PHPUnit\Framework\isEmpty;
 
 class ChildVaccineController extends Controller
 {
@@ -21,7 +24,7 @@ class ChildVaccineController extends Controller
      */
     public function index(Child $child)
     {
-        return $child->vaccines;
+        return $child->vaccines()->orderByPivot('created_at')->get();
     }
 
     /**
@@ -33,9 +36,18 @@ class ChildVaccineController extends Controller
      */
     public function store(Request $request, Child $child, Vaccine $vaccine)
     {
+        $vaccination_record = Validator::make($request->all(), [
+            'photo' => 'nullable|image:jpeg,png,jpg,gif,svg'
+        ])->validate();
+
         //Check if the vaccine is already present in the record
         if (!$child->vaccines()->where('vaccines.id', $vaccine->id)->exists()) {
-            $child->vaccines()->attach($vaccine->id);
+            if (!empty($vaccination_record)) {
+                $image_uploaded_path = $vaccination_record['photo']->store('child_vaccine', 'public');
+            } else {
+                $image_uploaded_path = 'child_vaccine/default.jpg';
+            }
+            $child->vaccines()->attach($vaccine->id, ['photo' => $image_uploaded_path]);
         }
         return response()->json([
             'message' => 'Vaccination Record added successfully' . $vaccine->name

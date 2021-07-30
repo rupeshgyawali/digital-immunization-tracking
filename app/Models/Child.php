@@ -30,6 +30,6 @@ class Child extends Model
      */
     public function vaccines()
     {
-        return $this->belongsToMany(Vaccine::class);
+        return $this->belongsToMany(Vaccine::class)->as('vaccination_record')->withPivot('photo')->withTimestamps();
     }
 }
