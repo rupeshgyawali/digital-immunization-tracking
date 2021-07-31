@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth', 'admin']], function () {
     // Route::get('/user', function () {
     //     return view('admin.user');
     // });
+    Route::get('/pie', 'App\Http\Controllers\Dashboard\ChartController@pieChart');
+    Route::get('/bar', 'App\Http\Controllers\Dashboard\ChartController@barChart');
     Route::get('/registerHP', 'App\Http\Controllers\Dashboard\HealthPersonnelController@registered');
     Route::get('/admin', 'App\Http\Controllers\Dashboard\UserController@registered');
 
