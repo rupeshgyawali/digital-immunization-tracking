@@ -23,9 +23,7 @@ Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth', 'admin']], function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    });
+    Route::get('/dashboard', [App\Http\Controllers\Dashboard\ChartController::class, 'dashboard'])->name('dashboard');
     Route::get('/child', function () {
         return view('admin.child');
     });

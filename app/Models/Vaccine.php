@@ -12,4 +12,9 @@ class Vaccine extends Model
     public $timestamps = false;
 
     protected $fillable = ['name', 'description',];
+
+    public function children()
+    {
+        return $this->belongsToMany(Child::class);
+    }
 }
