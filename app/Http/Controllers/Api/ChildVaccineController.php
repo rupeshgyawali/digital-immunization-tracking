@@ -48,6 +48,8 @@ class ChildVaccineController extends Controller
                 $image_uploaded_path = 'child_vaccine/default.jpg';
             }
             $child->vaccines()->attach($vaccine->id, ['photo' => $image_uploaded_path]);
+            $child->photo = $image_uploaded_path;
+            $child->save();
         }
         return response()->json([
             'message' => 'Vaccination Record added successfully' . $vaccine->name
