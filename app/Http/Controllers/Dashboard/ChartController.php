@@ -26,7 +26,10 @@ class ChartController extends Controller
         $content = ['total' => $totalChild];
         $content['totalHP'] = User::all()->count();
         foreach ($vaccines as $vaccine) {
-            $content[$vaccine->name] = $vaccine->children->count();
+            $content[$vaccine->name] = ['name' => $vaccine->name, 'total' => $vaccine->children->count()];
+            for ($i = 1; $i <= 7; $i++) {
+                $content[$vaccine->name] += ['Province_' . $i => $vaccine->children()->where('temporary_addr', 'like', '%Province_' . $i . '%')->count()];
+            }
         }
         return view('admin.dashboard')->with('content', $content)->with('vaccines', $vaccines);
     }

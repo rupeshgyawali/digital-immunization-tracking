@@ -22,7 +22,7 @@
                             <label>Vaccine</label>
                             <select name="vaccine" class="form-control" id='vaccine' onChange="vaccineChange(this);">
                                 @foreach ($vaccines as $vaccine)
-                                    <option value="{{ $vaccine->name }}-{{ $content[$vaccine->name] }}">
+                                    <option value={!! json_encode($content[$vaccine->name]) !!}>
                                         {{ $vaccine->name }}
                                     </option>
                                 @endforeach
@@ -57,14 +57,12 @@
         });
         google.charts.setOnLoadCallback(drawChart);
 
-        var vaccine = "{{ $vaccines->first()->name }}-{{ $content[$vaccines->first()->name] }}";
-        var vaccinated = parseInt(vaccine.split('-')[1]);
-        var notVaccinated = parseInt("{{ $content['total'] }}") - vaccinated;
+        var vaccine =
+            {!! json_encode($content[$vaccines->first()->name]) !!};
+        var total = parseInt("{{ $content['total'] }}");
 
         function vaccineChange(sel) {
-            vaccine = sel.options[sel.selectedIndex].value;
-            vaccinated = parseInt(vaccine.split('-')[1]);
-            notVaccinated = parseInt("{{ $content['total'] }}") - vaccinated;
+            vaccine = JSON.parse(sel.options[sel.selectedIndex].value);
             reDrawPieChart();
             reDrawBarChart();
 
@@ -74,12 +72,12 @@
         function reDrawPieChart() {
             var data = google.visualization.arrayToDataTable([
                 ['Status', 'numbers'],
-                ['Vaccinated', vaccinated],
-                ['Not Vaccinated', notVaccinated],
+                ['Vaccinated', vaccine['total']],
+                ['Not Vaccinated', total - vaccine['total']],
             ]);
 
             var options = {
-                title: vaccine.split('-')[0],
+                title: vaccine['name'],
                 is3D: true,
             };
 
@@ -92,13 +90,13 @@
                 ["Province", "Vaccinated", {
                     role: "style"
                 }],
-                ["Province-1", vaccinated, "#b87333"],
-                ["Province-2", 0, "silver"],
-                ["Province-3", 0, "gold"],
-                ["Province-4", 0, "color: #e5e4e2"],
-                ["Province-5", vaccinated + 5, "color: #e5e4c2"],
-                ["Province-6", 0, "color: #e5e4b2"],
-                ["Province-7", 0, "color: #e5e4a2"],
+                ["Province-1", vaccine['Province_1'], "#b87333"],
+                ["Province-2", vaccine['Province_2'], "silver"],
+                ["Province-3", vaccine['Province_3'], "gold"],
+                ["Province-4", vaccine['Province_4'], "color: #e5e4e2"],
+                ["Province-5", vaccine['Province_5'], "color: #e5e4c2"],
+                ["Province-6", vaccine['Province_6'], "color: #e5e4b2"],
+                ["Province-7", vaccine['Province_7'], "color: #e5e4a2"],
             ]);
 
             var view = new google.visualization.DataView(data);
@@ -128,12 +126,12 @@
 
             var data = google.visualization.arrayToDataTable([
                 ['Status', 'numbers'],
-                ['Vaccinated', vaccinated],
-                ['Not Vaccinated', notVaccinated],
+                ['Vaccinated', vaccine['total']],
+                ['Not Vaccinated', total - vaccine['total']],
             ]);
 
             var options = {
-                title: vaccine.split('-')[0],
+                title: vaccine['name'],
                 is3D: true,
             };
 
@@ -156,13 +154,13 @@
                 ["Province", "Vaccinated", {
                     role: "style"
                 }],
-                ["Province-1", notVaccinated, "#b87333"],
-                ["Province-2", 0, "silver"],
-                ["Province-3", 0, "gold"],
-                ["Province-4", 0, "color: #e5e4e2"],
-                ["Province-5", vaccinated, "color: #e5e4c2"],
-                ["Province-6", 0, "color: #e5e4b2"],
-                ["Province-7", 0, "color: #e5e4a2"],
+                ["Province-1", vaccine['Province_1'], "#b87333"],
+                ["Province-2", vaccine['Province_2'], "silver"],
+                ["Province-3", vaccine['Province_3'], "gold"],
+                ["Province-4", vaccine['Province_4'], "color: #e5e4e2"],
+                ["Province-5", vaccine['Province_5'], "color: #e5e4c2"],
+                ["Province-6", vaccine['Province_6'], "color: #e5e4b2"],
+                ["Province-7", vaccine['Province_7'], "color: #e5e4a2"],
             ]);
 
             var view = new google.visualization.DataView(data);
@@ -177,7 +175,7 @@
             ]);
 
             var options = {
-                title: "Child who got vaccinated.",
+                title: "Child who are vaccinated.",
                 bar: {
                     groupWidth: "50%"
                 },
